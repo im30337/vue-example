@@ -1,6 +1,6 @@
 # vuex_shop
 
-> A Vue.js project
+> A Vue.js project for demo
 
 ## Build Setup
 

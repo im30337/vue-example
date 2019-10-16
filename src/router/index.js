@@ -11,6 +11,7 @@ import Adminproduct from '@/pages/Adminproduct'
 import CustomerOrder from '@/pages/CustomerOrder'
 import CustomerCheckOut from '@/pages/CustomerCheckOut'
 import OrderList from '@/pages/OrderList'
+import ProductDetail from '@/pages/product/Productdetail'
 
 Vue.use(Router);
 
@@ -71,19 +72,19 @@ const router = new Router({
           name: 'Home',
           component: Home
         },
-        // {
-        //   path: 'VeeValidateForm',
-        //   name: 'VeeValidateForm',
-        //   component: VeeValidateForm,
-        // },
         {
-          path: 'PugTest',
-          name: 'PugTest',
-          component: PugTest,
-          meta: {
-            requiresAuth: true
-          }
-        }
+          path: 'productdetail',
+          name: 'ProductDetail',
+          component: ProductDetail
+        },
+        // {
+        //   path: 'PugTest',
+        //   name: 'PugTest',
+        //   component: PugTest,
+        //   meta: {
+        //     requiresAuth: true
+        //   }
+        // }
       ]
     }
   ],

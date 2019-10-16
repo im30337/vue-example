@@ -85,6 +85,7 @@
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
+      ref="productModal"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -113,7 +114,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <span>小計??元</span>
+            <span v-if="product.num">小計{{ productModalSum }}元</span>
             <button
               type="button"
               class="btn btn-primary"
@@ -147,6 +148,15 @@ export default {
       },
       isLoading: false
     };
+  },
+  computed: {
+    productModalSum() {
+      if (this.product.price) {
+        return this.product.price * this.product.num;
+      } else {
+        return this.product.origin_price * this.product.num;
+      }
+    }
   },
   methods: {
     getProducts() {
@@ -222,6 +232,13 @@ export default {
   created() {
     this.getProducts();
     this.getCart();
+  },
+  mounted() {
+    let vm = this;
+    $(this.$refs.productModal).on("hidden.bs.modal", function() {
+      console.log("product modal close");
+      vm.product.num = 0;
+    });
   }
 };
 </script>
@@ -230,7 +247,7 @@ export default {
 .table-section {
   display: flex;
   flex-direction: column;
-  align-items:center; 
+  align-items: center;
 }
 .cart-table {
   width: 45%;

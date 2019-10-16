@@ -1,11 +1,11 @@
 <template>
   <div>
-    <nav class="navbar navbar-light bg-light">
-      <router-link class="navbar-brand" to="/">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <router-link class="nav-link" to="/">
         <i class="fa fa-heart text-info" aria-hidden="true"></i>
         大失血拍賣
       </router-link>
-      <a href="#" @click="logOut">登出</a>
+      <a href="#" @click="logOut">管理員登入</a>
       <!-- 購物車內的數量 (Button 內包含 icon, 數量 badge) -->
       <div class="dropdown ml-auto">
         <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
@@ -24,7 +24,7 @@
               <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts.length">
                 <td class="align-middle text-center">
                   <a href="#" class="text-muted" @click.prevent="removeCart(item.id)">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <i class="fas fa-trash" aria-hidden="true"></i>
                   </a>
                 </td>
                 <td class="align-middle">{{ item.product.title }}</td>
@@ -58,12 +58,12 @@
           <li class="list-inline-item">© Copright 2019 失血大拍賣</li>
           <li class="list-inline-item">
             <a class="text-info" href="#">
-              <i class="fa fa-instagram" aria-hidden="true"></i> Instagrame
+              <i class="fab fa-instagram" aria-hidden="true"></i> Instagrame
             </a>
           </li>
           <li class="list-inline-item">
             <a class="text-info" href="#">
-              <i class="fa fa-facebook-square" aria-hidden="true"></i> Facebook
+              <i class="fab fa-facebook-square" aria-hidden="true"></i> Facebook
             </a>
           </li>
           <li class="list-inline-item">
@@ -77,32 +77,31 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Product",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(['isLoading']),
-    ...mapGetters('cartsModules',['cart'])
+    ...mapGetters(["isLoading"]),
+    ...mapGetters("cartsModules", ["cart"])
   },
   methods: {
     logOut() {
       const api = `${process.env.TERRYLAI_APIPATH}/logout`;
       this.$http.post(api).then(response => {
         console.log("response", response.data);
-        if(response.data.success){
-          this.$router.push('/login')
+        if (response.data.success) {
+          this.$router.push("/login");
         }
       });
     },
     removeCart(id) {
-      this.$store.dispatch('cartsModules/REMOVECART',id);
+      this.$store.dispatch("cartsModules/REMOVECART", id);
     },
-    ...mapActions("cartsModules",['GETCART'])
+    ...mapActions("cartsModules", ["GETCART"])
   },
   created() {
     console.log("store", this.$store);
@@ -158,5 +157,10 @@ export default {
 
 .alert-rounded {
   border-radius: 50px;
+}
+
+.nav-link {
+  color: black;
+  font-size: 1rem;
 }
 </style>
