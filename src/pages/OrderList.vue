@@ -37,22 +37,27 @@ export default {
   data() {
     return {
       orders: [],
-      isLoading: false
+      isLoading: false,
+      productInfo: []
     };
   },
   computed: {
     getProductName() {
+      const vm = this;
       return function(id) {
-        const productList = this.$store.state.adminProductList;
-        const result = productList.filter(function(item) {
-          return item.id === id;
-        });
-        return result[0].title;
-        // console.log('result', result)
+        if (vm.productInfo.length !== 0) {
+          const result = vm.productInfo.filter(function(item) {
+            return item.id === id;
+          });
+          return result[0].title;
+        } else {
+          return "不明商品";
+        }
       };
     }
   },
   created() {
+    this.getProducts();
     this.getOrderList();
   },
   methods: {
@@ -67,15 +72,25 @@ export default {
           vm.isLoading = false;
         }
       });
+    },
+    getProducts(page = 1) {
+      const api = `${process.env.TERRYLAI_APIPATH}/api/${process.env.TERRYLAI_CUSTOMPATH}/admin/products?page=${page}`;
+      const vm = this;
+      this.isLoading = true;
+      this.$http.get(api).then(response => {
+        if (response.data.success) {
+          console.log("response", response.data);
+          vm.productInfo = response.data.products.map(function(
+            item,
+            index,
+            array
+          ) {
+            return { id: item.id, title: item.title };
+          });
+          vm.isLoading = false;
+        }
+      });
     }
-    // getProductName(id) {
-    //   const productList = this.$store.state.adminProductList
-    //   const result = productList.filter(function(item) {
-    //     return item.id === id
-    //   })
-    //   return result[0].title
-    //   // console.log('result', result)
-    // }
   }
 };
 </script>

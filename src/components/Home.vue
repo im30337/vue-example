@@ -55,7 +55,12 @@
           <div class="tab-pane" id="list-gift">
             <div class="row align-items-stretch">
               <!-- 禮品 -->
-              <div class="col-md-4 mb-4" v-for="(item) in filterData" :key="item.id">
+              <div
+                class="col-md-4 mb-4"
+                v-for="(item) in filterData"
+                :key="item.id"
+                @click="getProductDetail(item.id)"
+              >
                 <div class="card border-0 box-shadow text-center h-100">
                   <img class="card-img-top" :src="item.image" alt="Card image cap" />
                   <div class="card-body">
@@ -81,13 +86,13 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex' 
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Home",
   data() {
     return {
-      searchText: "",
+      searchText: ""
     };
   },
   computed: {
@@ -103,9 +108,13 @@ export default {
       }
       return this.products;
     },
-    ...mapGetters('productsMoudules',['products','categories'])
+    ...mapGetters("productsMoudules", ["products", "categories"])
   },
   methods: {
+    getProductDetail(productId) {
+      console.log("productId", productId);
+      this.$router.push({ name: "ProductDetail", params: { productId } });
+    },
     // getProducts() {
     //   this.$store.dispatch('GETPRODUCTS');
     //   // const vm = this;
@@ -121,7 +130,7 @@ export default {
     //   // });
     // },
     addtoCart(id, qty = 1) {
-      this.$store.dispatch("cartsModules/ADDTOCART",{product_id:id, qty});
+      this.$store.dispatch("cartsModules/ADDTOCART", { product_id: id, qty });
       // const vm = this;
       // const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
       // // vm.isLoading = true;
@@ -142,7 +151,7 @@ export default {
       //   console.log("加入購物車:", response);
       // });
     },
-    ...mapActions("productsMoudules",['GETPRODUCTS'])
+    ...mapActions("productsMoudules", ["GETPRODUCTS"])
     // getUnique() {
     //   const vm = this;
     //   const categories = new Set();

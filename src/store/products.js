@@ -5,6 +5,7 @@ export default {
     state: {
         products: [],
         categories: [],
+        currentProductDetail: {}
     },
     mutations: {
         product(state, payload) {

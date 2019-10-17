@@ -34,13 +34,14 @@ new Vue({
   store,
   components: { App },
   template: '<App/>',
-  created() {
-        //頁面載入時讀取localStorage
-        localStorage.getItem("productListTemp") && this.$store.commit('adminProductList',Object.assign(this.$store.state.adminProductList,JSON.parse(localStorage.getItem("productListTemp"))));
+  /**測試將vuex中的state存到localStorage */
+  // created() {
+  //       //頁面載入時讀取localStorage
+  //       localStorage.getItem("productListTemp") && this.$store.commit('adminProductList',Object.assign(this.$store.state.adminProductList,JSON.parse(localStorage.getItem("productListTemp"))));
     
-        //在頁面重新整理時將vuex state裡的資料存進localStorage
-        window.addEventListener("beforeunload",()=>{
-            localStorage.setItem("productListTemp",JSON.stringify(this.$store.state.adminProductList))
-        })
-  }
+  //       //在頁面重新整理時將vuex state裡的資料存進localStorage
+  //       window.addEventListener("beforeunload",()=>{
+  //           localStorage.setItem("productListTemp",JSON.stringify(this.$store.state.adminProductList))
+  //       })
+  // }
 });

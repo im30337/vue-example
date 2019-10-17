@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         isLoading: false,
-        adminProductList: []
+        /**測試將vuex中的state存到localStorage */
+        // adminProductList: []
     },
     mutations: {
         loadingSwitch(state, bool) {
