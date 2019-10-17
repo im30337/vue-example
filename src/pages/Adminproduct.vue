@@ -284,10 +284,11 @@ export default {
           vm.isLoading = false;
           vm.products = response.data.products;
           vm.pagination = response.data.pagination;
-          const productInfo = vm.products.map(function(item, index, array) {
-            return {id: item.id, title: item.title}
-          })
-          vm.$store.commit('adminProductList',productInfo)
+          /**測試將vuex中的state存到localStorage */
+          // const productInfo = vm.products.map(function(item, index, array) {
+          //   return {id: item.id, title: item.title}
+          // })
+          // vm.$store.commit('adminProductList',productInfo)
         }
       });
     },

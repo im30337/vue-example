@@ -4,7 +4,7 @@
       <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb bg-transparent pl-0">
           <li class="breadcrumb-item">
-            <a href="#">首頁</a>
+            <router-link to="/Product/Home">首頁</router-link>
           </li>
           <li class="breadcrumb-item active" aria-current="page">西裝</li>
         </ol>
