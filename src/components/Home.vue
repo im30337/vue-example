@@ -55,15 +55,15 @@
           <div class="tab-pane" id="list-gift">
             <div class="row align-items-stretch">
               <!-- 禮品 -->
-              <div
-                class="col-md-4 mb-4"
-                v-for="(item) in filterData"
-                :key="item.id"
-                @click="getProductDetail(item.id)"
-              >
+              <div class="col-md-4 mb-4" v-for="(item) in filterData" :key="item.id">
                 <div class="card border-0 box-shadow text-center h-100">
-                  <img class="card-img-top" :src="item.image" alt="Card image cap" />
-                  <div class="card-body">
+                  <img
+                    class="card-img-top"
+                    :src="item.image"
+                    alt="Card image cap"
+                    @click="getProductDetail(item.id)"
+                  />
+                  <div class="card-body" @click="getProductDetail(item.id)">
                     <h4 class="card-title">{{ item.title }}</h4>
                     <p class="card-text text-left">{{ item.content }}</p>
                   </div>

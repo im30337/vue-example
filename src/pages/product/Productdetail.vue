@@ -40,10 +40,10 @@
             </div>
 
             <div class="input-group mt-3">
-              <select name class="form-control mr-1" id>
+              <select name class="form-control mr-1" v-model="quantity">
                 <option v-for="num in 10" :key="num" :value="num">{{ num }} 件</option>
               </select>
-              <a href="shoppingCart-checkout.html" class="btn btn-primary">
+              <a class="btn btn-primary" @click="addToCart(quantity, productId)">
                 <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車
               </a>
             </div>
@@ -84,7 +84,7 @@
           />
           <div class="alert alert-secondary mt-4" role="alert">
             <h2 class="text-center">購物說明</h2>
-            <p>
+            <p :class="classObject">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, at! Totam, exercitationem repellat. Saepe facere
               amet expedita perferendis voluptatem dicta dignissimos tempora ut atque, rerum doloribus? Magni, blanditiis.
               Assumenda, distinctio!
@@ -97,7 +97,29 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      quantity: 0,
+      productId: "",
+      classObject:{
+        "fdfsd":true,
+        "dfsfsd": true
+      } 
+    };
+  },
+  methods: {
+    getProductDetail() {
+    },
+    addToCart(qty = 1, id) {
+      this.$store.dispatch("cartsModules/ADDTOCART", { product_id: id, qty });
+    }
+  },
+  created() {
+    this.productId = this.$route.params.productId;
+    /**正常情況需在此打api獲取該商品的詳細訊息 */
+  }
+};
 </script>
 
 <style>
