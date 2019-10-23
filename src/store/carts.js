@@ -4,12 +4,19 @@ export default {
     namespaced: true,
     state: {
         cart: {
-            carts: []
+            carts: [],
+            final_total: 0,
+            total: 0
         },
     },
     mutations: {
         cart(state, payload) {
-            state.cart.carts = payload;
+            let cartTemp = state.cart;
+            ({
+                carts: cartTemp.carts,
+                final_total: cartTemp.final_total,
+                total: cartTemp.total
+            } = payload);
         }
     },
     actions: {
@@ -27,7 +34,7 @@ export default {
             const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
             axios.get(url).then(response => {
                 if (response.data.data.carts) {
-                    context.commit('cart', response.data.data.carts);
+                    context.commit('cart', response.data.data);
                 }
                 context.commit("loadingSwitch", false, { root: true });
                 console.log("取得購物車", response.data.data);

@@ -12,7 +12,8 @@ import CustomerOrder from '@/pages/CustomerOrder'
 import CustomerCheckOut from '@/pages/CustomerCheckOut'
 import OrderList from '@/pages/OrderList'
 import ProductDetail from '@/pages/product/Productdetail'
-import CheckOutOrder from '@/pages/product/checkoutOrder'
+import CheckoutOrder from '@/pages/product/checkoutOrder'
+import FinishOrder from '@/pages/product/finishorder'
 
 Vue.use(Router);
 
@@ -80,9 +81,14 @@ const router = new Router({
         },
         {
           path: 'checkoutorder',
-          name: 'CheckOutOrder',
-          component: CheckOutOrder
+          name: 'CheckoutOrder',
+          component: CheckoutOrder
         },
+        {
+          path: 'finishorder',
+          name: 'FinishOrder',
+          component: FinishOrder
+        }
         // {
         //   path: 'PugTest',
         //   name: 'PugTest',
