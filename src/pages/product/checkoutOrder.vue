@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container main-contant py-5">
-      <h1 class="text-center mb-3 text-secondary">六角血拼 結帳</h1>
+      <h1 class="text-center mb-3 text-secondary">血拼大特賣 結帳</h1>
       <section class="form-row align-items-center text-center">
         <div class="col">
           <div class="alert alert-success alert-rounded mb-0" role="alert">1.輸入訂單資料</div>
@@ -23,7 +23,7 @@
                   顯示購物車細節
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
-                <span class="h3 ml-auto mb-0">$520</span>
+                <span class="h3 ml-auto mb-0">$ {{ cart.final_total }}</span>
               </h6>
             </div>
           </div>
@@ -39,7 +39,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="item in cart.carts" :key="item.id" >
                   <td class="align-middle text-center">
                     <a
                       href="#removeModal"
@@ -52,25 +52,25 @@
                   </td>
                   <td class="align-middle">
                     <img
-                      src="https://images.unsplash.com/photo-1494281258937-45f28753affd?w=1350"
+                      :src="item.product.image"
                       class="img-fluid img-thumbnail"
                       alt
                     />
                   </td>
-                  <td class="align-middle">金牌西裝</td>
-                  <td class="align-middle">1 件</td>
-                  <td class="align-middle text-right">$520</td>
+                  <td class="align-middle">{{ item.product.category }}</td>
+                  <td class="align-middle">{{ item.qty }} {{ item.product.unit}}</td>
+                  <td class="align-middle text-right">{{ item.total }}元</td>
                 </tr>
                 <tr>
                   <td colspan="4" class="text-right">運費</td>
                   <td class="text-right">
-                    <strong>$60</strong>
+                    <strong>$0</strong>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="4" class="text-right">合計</td>
                   <td class="text-right">
-                    <strong>$580</strong>
+                    <strong>$ {{ cart.final_total }}</strong>
                   </td>
                 </tr>
               </tbody>
@@ -87,7 +87,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email" required />
+                <input type="email" class="form-control" id="email" placeholder="Email" required/>
                 <div class="invalid-feedback">請輸入正確的 Email</div>
               </div>
             </div>
@@ -126,13 +126,13 @@
             <div class="text-right">
               <a href="#" class="btn btn-secondary">繼續選購</a>
               <button type="submit" class="btn btn-primary">確認付款</button>
-              <a href="#" class="btn btn-primary">確認付款</a>
+              <!-- <a href="#" class="btn btn-primary">確認付款</a> -->
             </div>
           </form>
         </div>
       </section>
     </div>
-<!-- delete modal -->
+    <!-- delete modal -->
     <div
       class="modal fade"
       id="removeModal"
@@ -163,7 +163,24 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters, mapActions } from "vuex";
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["isLoading"]),
+    ...mapGetters("cartsModules", ["cart"])
+  },
+  methods: {
+    submitOrder() {
+      /**確認付款 */
+    },
+    clearCart() {
+      /**確認結帳後清空購物車 */
+    }
+  }
+};
 </script>
 
 <style>
