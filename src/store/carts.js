@@ -48,6 +48,10 @@ export default {
                 context.dispatch('GETCART');
                 console.log("刪除購物車項目", response);
             });
+        },
+        CLEARCART(context) {
+            /**清空購物車 */
+            alert('清空購物車請求已送出')
         }
     },
     getters: {

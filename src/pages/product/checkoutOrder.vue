@@ -39,8 +39,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in cart.carts" :key="item.id" >
-                  <td class="align-middle text-center">
+                <tr v-for="item in cart.carts" :key="item.id">
+                  <td class="align-middle text-center" @click="setDeleteTemp(item)">
                     <a
                       href="#removeModal"
                       class="text-muted"
@@ -51,11 +51,7 @@
                     </a>
                   </td>
                   <td class="align-middle">
-                    <img
-                      :src="item.product.image"
-                      class="img-fluid img-thumbnail"
-                      alt
-                    />
+                    <img :src="item.product.image" class="img-fluid img-thumbnail" alt />
                   </td>
                   <td class="align-middle">{{ item.product.category }}</td>
                   <td class="align-middle">{{ item.qty }} {{ item.product.unit}}</td>
@@ -87,7 +83,7 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email" required/>
+                <input type="email" class="form-control" id="email" placeholder="Email" required />
                 <div class="invalid-feedback">請輸入正確的 Email</div>
               </div>
             </div>
@@ -124,8 +120,8 @@
               <div class="invalid-feedback">請輸入地址</div>
             </div>
             <div class="text-right">
-              <a href="#" class="btn btn-secondary">繼續選購</a>
-              <button type="submit" class="btn btn-primary">確認付款</button>
+              <router-link class="btn btn-secondary" to="/Product/Home">繼續選購</router-link>
+              <button type="submit" class="btn btn-primary" @click="confirmOrder">確認付款</button>
               <!-- <a href="#" class="btn btn-primary">確認付款</a> -->
             </div>
           </form>
@@ -154,7 +150,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">否</button>
-            <button type="button" class="btn btn-outline-danger px-5">是</button>
+            <button
+              type="button"
+              class="btn btn-outline-danger px-5"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="deleteCommodity"
+            >是</button>
           </div>
         </div>
       </div>
@@ -166,7 +168,9 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      deleteCommodityTemp: {}
+    };
   },
   computed: {
     ...mapGetters(["isLoading"]),
@@ -176,9 +180,19 @@ export default {
     submitOrder() {
       /**確認付款 */
     },
-    clearCart() {
-      /**確認結帳後清空購物車 */
-    }
+    setDeleteTemp(commodity) {
+      this.deleteCommodityTemp = commodity;
+    },
+    deleteCommodity() {
+      this.$store.dispatch(
+        "cartsModules/REMOVECART",
+        this.deleteCommodityTemp.id
+      );
+    },
+    confirmOrder() {
+      this.CLEARCART()
+    },
+    ...mapActions("cartsModules", ["CLEARCART"])
   }
 };
 </script>

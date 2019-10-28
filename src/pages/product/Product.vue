@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <router-link class="nav-link" to="/">
+      <router-link class="nav-link" to="/Product/Home">
         <i class="fa fa-heart text-info" aria-hidden="true"></i>
         大失血拍賣
       </router-link>
@@ -33,7 +33,7 @@
               </tr>
             </tbody>
           </table>
-          <button class="btn btn-primary btn-block">
+          <button class="btn btn-primary btn-block" @click="()=> this.$router.push('/Product/checkoutorder')">
             <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
           </button>
         </div>
