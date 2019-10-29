@@ -16,4 +16,12 @@ Validator.extend('isMobile', {
     }
 });
 
+//4位數郵遞區號
+Validator.extend('isPostalCode', {
+    getMessage: field => field + '必須是4位數郵遞區號',
+    validate: value => {
+        return value.length === 4 && !/[^\d]/g.test(value)
+    }
+});
+
 export default Validator

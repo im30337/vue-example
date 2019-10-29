@@ -20,7 +20,8 @@ const dictionary = {
             numeric:(field) => field + '只能是數字',
             alpha:(field) => field + '只能是英文',
             onlyCN:(field) => field + '只能有中文',
-            isMobile:(field) => field + '必須為11位手機號碼' 
+            isMobile:(field) => field + '必須為11位手機號碼',
+            isPostalCode:(field) => field + '必須為4位數字' 
             //   url: () => '請輸入正確格式的伺服器地址',
             //   ip: () => '請輸入正確的ip地址'
         },

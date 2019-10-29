@@ -28,11 +28,7 @@
           v-validate.continues="'required|onlyCN'"
           :class="{'is-invalid': errors.has('姓名')}"
         />
-        <span
-          v-for="error in errors.collect('姓名')"
-          class="text-danger"
-          v-if="errors.has('姓名')"
-        >{{error}}</span>
+        <span class="text-danger" v-if="errors.has('姓名')">{{errors.first('姓名')}}</span>
       </div>
       <div class="form-group">
         <label for="usertel">收件人電話</label>
@@ -94,20 +90,23 @@ export default {
     createOrder() {
       const api = `${process.env.TERRYLAI_APIPATH}/api/${process.env.TERRYLAI_CUSTOMPATH}/order`;
       const vm = this;
-      const order = this.form
+      const order = this.form;
       this.$validator.validate().then(valid => {
         if (valid) {
           // vm.$router.push(`/customer_checkout/-Lq4OZT-Lmpi8VaVtS_0`)
           console.log("order", order);
-          this.$http.post(api, {data: order}).then(response => {
-            console.log(response)
-            if (response.data.success) {
-              console.log("訂單已建立", response.data);
-              vm.$router.push(`/customer_checkout/${response.data.orderId}`)
-            }
-          }).catch(err => {
-            console.log('err', err)
-          });
+          this.$http
+            .post(api, { data: order })
+            .then(response => {
+              console.log(response);
+              if (response.data.success) {
+                console.log("訂單已建立", response.data);
+                vm.$router.push(`/customer_checkout/${response.data.orderId}`);
+              }
+            })
+            .catch(err => {
+              console.log("err", err);
+            });
         } else {
           console.log("欄位不完整");
         }

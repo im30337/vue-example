@@ -74,17 +74,35 @@
           </div>
 
           <h5 class="py-3 mt-5 mb-2 text-center bg-light">訂購人資訊</h5>
-          <form id="needs-validation" novalidate>
+          <form id="needs-validation">
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="username">姓名</label>
-                <input type="text" class="form-control" id="username" placeholder="姓名" required />
-                <div class="invalid-feedback">請輸入姓名</div>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="姓名"
+                  id="username"
+                  placeholder="姓名"
+                  v-model="form.name"
+                  v-validate.continues="'required|onlyCN'"
+                  :class="{'is-invalid': errors.has('姓名')}"
+                />
+                <span class="text-danger" v-if="errors.has('姓名')">{{errors.first('姓名')}}</span>
               </div>
               <div class="form-group col-md-6">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email" required />
-                <div class="invalid-feedback">請輸入正確的 Email</div>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  id="email"
+                  placeholder="請輸入email"
+                  v-model="form.email"
+                  v-validate="'required|email'"
+                  :class="{'is-invalid': errors.has('email')}"
+                />
+                <span class="text-danger" v-if="errors.has('email')">{{errors.first('email')}}</span>
               </div>
             </div>
             <div class="form-row">
@@ -92,7 +110,6 @@
                 <label for="state">國家</label>
                 <select id="state" class="form-control" required>
                   <option selected>台灣</option>
-                  <option>...</option>
                 </select>
               </div>
               <div class="form-group col-md">
@@ -105,7 +122,17 @@
               </div>
               <div class="form-group col-md">
                 <label for="inputZip">郵遞區號</label>
-                <input type="text" class="form-control" id="inputZip" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputZip"
+                  name="郵遞區號"
+                  placeholder="請輸入郵遞區號"
+                  v-model="form.postalCode"
+                  v-validate.immediate="'required|isPostalCode'"
+                  :class="{'is-invalid': errors.has('郵遞區號')}"
+                />
+                <span class="text-danger" v-if="errors.has('郵遞區號')">{{errors.first('郵遞區號')}}</span>
               </div>
             </div>
             <div class="form-group">
@@ -114,14 +141,17 @@
                 type="text"
                 class="form-control"
                 id="inputAddress"
-                placeholder="重慶南路一段122號"
-                required
+                name="地址"
+                placeholder="請輸入地址"
+                v-model="form.address"
+                v-validate="'required|alpha'"
+                :class="{'is-invalid': errors.has('地址')}"
               />
-              <div class="invalid-feedback">請輸入地址</div>
+              <span class="text-danger" v-if="errors.has('地址')">{{errors.first('地址')}}</span>
             </div>
             <div class="text-right">
               <router-link class="btn btn-secondary" to="/Product/Home">繼續選購</router-link>
-              <button type="submit" class="btn btn-primary" @click="confirmOrder">確認付款</button>
+              <button type="submit" class="btn btn-primary" @click.prevent="confirmOrder">確認付款</button>
               <!-- <a href="#" class="btn btn-primary">確認付款</a> -->
             </div>
           </form>
@@ -169,7 +199,15 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      deleteCommodityTemp: {}
+      deleteCommodityTemp: {},
+      form: {
+        name: "",
+        email: "",
+        country: "",
+        city: "",
+        postalCode: null,
+        address: ""
+      }
     };
   },
   computed: {
@@ -190,7 +228,15 @@ export default {
       );
     },
     confirmOrder() {
-      this.CLEARCART()
+      const vm = this;
+      const order = this.form;
+      this.$validator.validate().then(valid => {
+        if (valid) {
+          this.CLEARCART();
+        } else {
+          console.log("欄位不完整");
+        }
+      });
     },
     ...mapActions("cartsModules", ["CLEARCART"])
   }
