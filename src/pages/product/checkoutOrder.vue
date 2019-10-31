@@ -108,17 +108,33 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="state">國家</label>
-                <select id="state" class="form-control" required>
-                  <option selected>台灣</option>
+                <select
+                  id="state"
+                  name="國家"
+                  class="form-control"
+                  v-model="form.country"
+                  v-validate="'required'"
+                  :class="{'is-invalid': errors.has('國家')}"
+                >
+                  <option value="台灣">台灣</option>
                 </select>
+                <span class="text-danger" v-if="errors.has('國家')">{{errors.first('國家')}}</span>
               </div>
               <div class="form-group col-md">
                 <label for="city">城市</label>
-                <select name id="city" class="form-control" required>
+                <select
+                  name="城市"
+                  id="city"
+                  class="form-control"
+                  v-model="form.city"
+                  v-validate="'required'"
+                  :class="{'is-invalid': errors.has('城市')}"
+                >
                   <option value="台北市">台北市</option>
                   <option value="台南市">台南市</option>
                   <option value="高雄市">高雄市</option>
                 </select>
+                <span class="text-danger" v-if="errors.has('城市')">{{errors.first('城市')}}</span>
               </div>
               <div class="form-group col-md">
                 <label for="inputZip">郵遞區號</label>
@@ -148,6 +164,42 @@
                 :class="{'is-invalid': errors.has('地址')}"
               />
               <span class="text-danger" v-if="errors.has('地址')">{{errors.first('地址')}}</span>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="state">付款方式</label>
+                <select
+                  id="state"
+                  name="付款方式"
+                  class="form-control"
+                  v-model="form.paymentMethod"
+                  v-validate="'required'"
+                  :class="{'is-invalid': errors.has('付款方式')}"
+                >
+                  <option value="信用卡">信用卡</option>
+                </select>
+                <span class="text-danger" v-if="errors.has('付款方式')">{{errors.first('付款方式')}}</span>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="state">取件方式</label>
+                <select
+                  id="state"
+                  name="取件方式"
+                  class="form-control"
+                  v-model="form.productDelivery"
+                  v-validate="'required'"
+                  :class="{'is-invalid': errors.has('取件方式')}"
+                >
+                  <option value="超商取貨">超商取貨</option>
+                </select>
+                <span class="text-danger" v-if="errors.has('取件方式')">{{errors.first('取件方式')}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">訂單備註</label>
+              <textarea class="form-control" name id="exampleFormControlTextarea1" 
+              rows="3"
+              v-model="form.remarks"></textarea>
             </div>
             <div class="text-right">
               <router-link class="btn btn-secondary" to="/Product/Home">繼續選購</router-link>
@@ -206,7 +258,10 @@ export default {
         country: "",
         city: "",
         postalCode: null,
-        address: ""
+        address: "",
+        paymentMethod:"",
+        productDelivery:"",
+        remarks:""
       }
     };
   },
@@ -215,9 +270,6 @@ export default {
     ...mapGetters("cartsModules", ["cart"])
   },
   methods: {
-    submitOrder() {
-      /**確認付款 */
-    },
     setDeleteTemp(commodity) {
       this.deleteCommodityTemp = commodity;
     },
@@ -232,7 +284,8 @@ export default {
       const order = this.form;
       this.$validator.validate().then(valid => {
         if (valid) {
-          this.CLEARCART();
+          /**金流api處理 */
+          vm.$router.push('/Product/paymentcheck')
         } else {
           console.log("欄位不完整");
         }
