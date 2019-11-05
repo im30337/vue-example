@@ -14,6 +14,7 @@ import OrderList from '@/pages/OrderList'
 import ProductDetail from '@/pages/product/Productdetail'
 import CheckoutOrder from '@/pages/product/checkoutOrder'
 import PaymentCheck from '@/pages/product/PaymentCheck'
+import ThirdPartyPayment from '@/pages/product/thirdPartyPayment'
 import FinishOrder from '@/pages/product/finishorder'
 
 Vue.use(Router);
@@ -89,6 +90,11 @@ const router = new Router({
           path: 'paymentcheck',
           name: 'PaymentCheck',
           component: PaymentCheck
+        },
+        {
+          path: 'paymentcheck_third_party',
+          name: 'paymentcheck_third_party',
+          component: ThirdPartyPayment
         },
         {
           path: 'finishorder',

@@ -14,7 +14,14 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="username">持卡人姓名</label>
-                <input type="text" class="form-control" name="姓名" id="username" placeholder="姓名" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="姓名"
+                  id="username"
+                  v-model="form.name"
+                  placeholder="姓名"
+                />
                 <span class="text-danger"></span>
               </div>
               <div class="form-group col-md-6">
@@ -23,6 +30,7 @@
                   id="state"
                   name="信用卡類型"
                   class="form-control"
+                  v-model="form.cardType"
                   v-validate="'required'"
                   :class="{'is-invalid': errors.has('信用卡類型')}"
                 >
@@ -34,7 +42,14 @@
             <div class="form-row">
               <div class="form-group col-md">
                 <label for="inputZip">卡號</label>
-                <input type="text" class="form-control" id="inputZip" name="卡號" placeholder="請輸入卡號" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputZip"
+                  name="卡號"
+                  v-model="form.cardNumber"
+                  placeholder="請輸入卡號"
+                />
                 <span class="text-danger"></span>
               </div>
             </div>
@@ -45,6 +60,7 @@
                   id="state"
                   name="月"
                   class="form-control"
+                  v-model="form.invalidMonth"
                   v-validate="'required'"
                   :class="{'is-invalid': errors.has('月')}"
                   placeholder="月"
@@ -60,6 +76,7 @@
                   id="state"
                   name="年"
                   class="form-control"
+                  v-model="form.invalidYear"
                   v-validate="'required'"
                   :class="{'is-invalid': errors.has('年')}"
                   placeholder="年"
@@ -77,6 +94,7 @@
                 class="form-control"
                 id="inputAddress"
                 name="安全碼"
+                v-model="form.securityCode"
                 placeholder="請輸入安全碼"
               />
               <span class="text-danger"></span>
@@ -97,7 +115,16 @@
 import { mapActions } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      form: {
+        name: "",
+        cardType: "",
+        cardNumber: null,
+        invalidMonth: 0,
+        invalidYear: 0,
+        securityCode: null
+      }
+    };
   },
   methods: {
     ...mapActions("cartsModules", ["CLEARCART"])
